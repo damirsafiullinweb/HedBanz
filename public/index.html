@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Кто я?</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <main>
+    <h1><a href="/">Кто я?</a></h1>
+
+    <!-- Главная: создать комнату -->
+    <section id="v-home" hidden>
+      <p class="muted">Каждому достаётся персонаж, которого он не знает. Задавайте вопросы остальным и угадайте, кто вы.</p>
+      <form id="f-create" class="stack">
+        <label for="i-create-name">Ваше имя</label>
+        <input id="i-create-name" maxlength="20" autocomplete="off" required>
+        <button type="submit">Создать комнату</button>
+        <p class="error" id="e-create"></p>
+      </form>
+    </section>
+
+    <!-- Вход по ссылке -->
+    <section id="v-name" hidden>
+      <p>Комната <b class="code" id="t-join-code"></b></p>
+      <form id="f-join" class="stack">
+        <label for="i-join-name">Ваше имя</label>
+        <input id="i-join-name" maxlength="20" autocomplete="off" required>
+        <button type="submit">Войти</button>
+        <p class="error" id="e-join"></p>
+      </form>
+    </section>
+
+    <!-- Сообщение (комната не найдена, удалили и т.п.) -->
+    <section id="v-message" hidden>
+      <p id="t-message"></p>
+      <p><a href="/">На главную</a></p>
+    </section>
+
+    <!-- Комната -->
+    <section id="v-room" hidden>
+      <div class="roombar">
+        <span>Комната <b class="code" id="t-code"></b></span>
+        <button type="button" class="secondary" id="b-copy">Скопировать ссылку</button>
+      </div>
+      <p class="status" id="t-conn" hidden>Нет соединения, переподключаемся…</p>
+
+      <!-- Лобби -->
+      <div id="p-lobby" hidden>
+        <h2>Игроки</h2>
+        <ul class="players" id="l-lobby"></ul>
+        <button type="button" id="b-start" hidden>Начать</button>
+        <p class="muted" id="t-lobby-hint"></p>
+      </div>
+
+      <!-- Ожидание следующего раунда -->
+      <div id="p-wait" hidden>
+        <p class="notice">Игра уже идёт. Вы присоединитесь в следующем раунде.</p>
+      </div>
+
+      <!-- Загадывание -->
+      <div id="p-picking" hidden>
+        <div id="pick-box">
+          <p class="pick-title">Загадайте персонажа для игрока <b id="t-pick-for"></b></p>
+          <form id="f-pick" class="row">
+            <input id="i-pick" maxlength="60" autocomplete="off" placeholder="Например: Шерлок Холмс">
+            <button type="submit">Готово</button>
+          </form>
+          <p class="muted" id="t-pick-state"></p>
+        </div>
+        <h2>Кто готов</h2>
+        <ul class="players" id="l-ready"></ul>
+      </div>
+
+      <!-- Игра -->
+      <div id="p-playing" hidden>
+        <ul class="cards" id="l-cards"></ul>
+        <div id="me-tools">
+          <label for="i-notes">Заметки о себе</label>
+          <textarea id="i-notes" rows="3" placeholder="Что вы уже узнали: реальный, мужчина, не актёр…"></textarea>
+          <button type="button" class="danger" id="b-giveup">Сдаюсь</button>
+        </div>
+      </div>
+
+      <!-- Итоги -->
+      <div id="p-results" hidden>
+        <h2>Итоги раунда</h2>
+        <ol class="results" id="l-results"></ol>
+        <button type="button" id="b-new" hidden>Новый раунд</button>
+        <p class="muted" id="t-results-hint"></p>
+      </div>
+
+      <!-- Список игроков во время раунда (для хоста — удаление) -->
+      <details id="p-roster" hidden>
+        <summary>Игроки в комнате</summary>
+        <ul class="players" id="l-roster"></ul>
+      </details>
+    </section>
+  </main>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>
